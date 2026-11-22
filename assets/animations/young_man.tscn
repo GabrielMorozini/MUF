@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://glqc6afkxjk4"]
+
+[ext_resource type="Script" path="res://cordatix/psx_bystanders/scripts/bystander.gd" id="1_s"]
+[ext_resource type="PackedScene" uid="uid://dgfr8qh6xt4c" path="res://cordatix/psx_bystanders/models/young_man.glb" id="2_m"]
+
+[sub_resource type="CapsuleShape3D" id="Shape_1"]
+radius = 0.25
+height = 1.84
+
+[node name="YoungMan" type="CharacterBody3D"]
+script = ExtResource("1_s")
+person = "young_man"
+
+[node name="Model" parent="." instance=ExtResource("2_m")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.920, 0)
+shape = SubResource("Shape_1")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+radius = 0.25
+height = 1.84

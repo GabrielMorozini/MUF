@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://dl2vwlwy03q16"]
+
+[ext_resource type="Script" uid="uid://bakepof6fefdj" path="res://scripts/terrain.gd" id="1_rdiko"]
+[ext_resource type="Script" uid="uid://b7buvvs83p188" path="res://scripts/player.gd" id="2_dhk8n"]
+[ext_resource type="Script" uid="uid://ct7urjfyrs61f" path="res://scripts/blizzard.gd" id="2_k4ryu"]
+[ext_resource type="Script" uid="uid://cntkmxiynpmpl" path="res://scripts/sun.gd" id="2_vf3k6"]
+[ext_resource type="Script" uid="uid://bvsbosybdhx43" path="res://scripts/onibus.gd" id="5_nowtg"]
+[ext_resource type="Script" uid="uid://cucy768v4xvo" path="res://scripts/intro.gd" id="6_86c3s"]
+[ext_resource type="PackedScene" uid="uid://c45kcpse5lsnf" path="res://assets/models/Characters_psx/Models/Male/Character_25_Doctor.fbx" id="6_y7o3e"]
+[ext_resource type="PackedScene" uid="uid://c5gslw5v243wy" path="res://assets/animations/Walking.fbx" id="7_cv0yt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_al8mn"]
+albedo_color = Color(0.8627451, 0.9098039, 0.9490196, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_vxjv0"]
+material = SubResource("StandardMaterial3D_al8mn")
+size = Vector2(60, 60)
+subdivide_width = 32
+subdivide_depth = 32
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vxjv0"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_vxjv0"]
+size = Vector3(0.45, 0.6, 0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_al8mn"]
+size = Vector3(0.18, 0.8, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ybxgj"]
+size = Vector3(0.18, 0.8, 0.2)
+
+[sub_resource type="Sky" id="Sky_dbru8"]
+
+[sub_resource type="Environment" id="Environment_vf3k6"]
+background_mode = 2
+sky = SubResource("Sky_dbru8")
+ambient_light_source = 3
+tonemap_mode = 2
+fog_enabled = true
+fog_density = 0.005
+
+[node name="Node3D" type="Node3D" unique_id=1312300939]
+
+[node name="Ground" type="MeshInstance3D" parent="." unique_id=2001163879]
+visible = false
+mesh = SubResource("PlaneMesh_vxjv0")
+
+[node name="Terrain" type="MeshInstance3D" parent="." unique_id=1133548298]
+script = ExtResource("1_rdiko")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Terrain" unique_id=815024493]
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=376011130]
+transform = Transform3D(0.8660254, 0.35355338, -0.35355338, 0, 0.70710677, 0.70710677, 0.5, -0.6123724, 0.6123724, 0, 0, 0)
+script = ExtResource("2_vf3k6")
+
+[node name="Predio" type="CSGBox3D" parent="." unique_id=1195176338]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0)
+use_collision = true
+size = Vector3(12, 4, 8)
+
+[node name="Interior" type="CSGBox3D" parent="Predio" unique_id=1127859514]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03, 0)
+operation = 2
+size = Vector3(11.6, 3.7, 7.6)
+
+[node name="Porta" type="CSGBox3D" parent="Predio" unique_id=826989896]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.65, 4)
+operation = 2
+size = Vector3(1.6, 2.5, 1)
+
+[node name="Blizzard" type="Node3D" parent="." unique_id=931383094]
+script = ExtResource("2_k4ryu")
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1171729232]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("2_dhk8n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1131528191]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_vxjv0")
+
+[node name="Camera3D" type="Camera3D" parent="Player" unique_id=262473313]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="Corpo" type="Node3D" parent="Player" unique_id=14642102]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.1)
+
+[node name="Torso" type="MeshInstance3D" parent="Player/Corpo" unique_id=1569527236]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+mesh = SubResource("BoxMesh_vxjv0")
+
+[node name="PernaE" type="MeshInstance3D" parent="Player/Corpo" unique_id=973419438]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12, 0.4, 0)
+mesh = SubResource("BoxMesh_al8mn")
+
+[node name="PernaD" type="MeshInstance3D" parent="Player/Corpo" unique_id=2146749783]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12, 0.4, 0)
+mesh = SubResource("BoxMesh_ybxgj")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1418154730]
+environment = SubResource("Environment_vf3k6")
+
+[node name="Onibus" type="Node3D" parent="." unique_id=1938718755]
+script = ExtResource("5_nowtg")
+modelos = Array[PackedScene]([ExtResource("6_y7o3e")])
+cena_andar = ExtResource("7_cv0yt")
+cena_levantar = ExtResource("7_cv0yt")
+
+[node name="Intro" type="Node3D" parent="." unique_id=1659026189]
+script = ExtResource("6_86c3s")
